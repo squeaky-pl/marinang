@@ -15,8 +15,12 @@ MYSQL * mysql_init(MYSQL *mysql);
 
 const char * mysql_get_client_info(void);
 unsigned long mysql_get_client_version(void);
-
-
+const char * mysql_error(MYSQL *mysql);
+MYSQL * mysql_real_connect(
+    MYSQL *mysql, const char *host, const char *user, const char *passwd,
+    const char *db, unsigned int port, const char *unix_socket,
+    unsigned long clientflag);
+void mysql_close(MYSQL *sock);
 """)
 
 cflags = shlex.split(check_output(['mysql_config', '--cflags']))
