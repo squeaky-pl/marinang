@@ -16,11 +16,11 @@ class ClientModule(types.ModuleType):
 
     @property
     def version(self):
-        return self._ffi.string(self._ffi.mysql_get_client_info())
+        return self._ffi.string(self._ffi.get_client_info())
 
     @property
     def decversion(self):
-        return int(self._ffi.mysql_get_client_version())
+        return int(self._ffi.get_client_version())
 
     @property
     def version_info(self):
