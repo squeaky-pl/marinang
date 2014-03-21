@@ -3,7 +3,7 @@ import _ffi
 
 class Connection(object):
     def __init__(self):
-        self._handle = _ffi.init(None)
+        self.__handle = _ffi.init(None)
 
     @classmethod
     def _connect(klass, host=None, user=None, password=None, database=None,
@@ -12,24 +12,26 @@ class Connection(object):
         port = port or 0
         connection = klass()
         _ffi.real_connect(
-            connection._handle, host, user, password, database, port, socket,
+            connection.__handle, host, user, password, database, port, socket,
             0)
 
         return connection
 
     def query(self, sql):
-        _ffi.query(self._handle, sql)
+        _ffi.query(self.__handle, sql)
 
     def close(self):
-        _ffi.close(self._handle)
-        self._handle = None
+        _ffi.close(self.__handle)
+        self.__handle = None
 
     @property
     def closed(self):
-        return not self._handle
+        return not self.__handle
 
     def __del__(self):
         if not self.closed:
             self.close()
 
 
+connect = Connection._connect
+del Connection._connect
